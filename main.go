@@ -12,9 +12,10 @@ func main() {
 
 	app := cli.NewApp()
 	app.Name = "doit-ssl-checker"
-	app.Usage = "./doit-ssl-checker <-d domainname> [-i ip] [-p port] [-l]"
+	app.Usage = " 检测对应域名的ssl工具"
 	app.Author = "yongfu"
 	app.Description = "检查主机的https证书配置"
+	app.ArgsUsage = "\n  ./doit-ssl-checker <-d domainname> [-i ip] [-p port] [-l]"
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
@@ -33,8 +34,7 @@ func main() {
 			Usage: "可选：指定端口",
 		},
 		cli.BoolFlag{
-			Name: "long, l",
-			//Value: False,
+			Name:  "long, l",
 			Usage: "可选：是否输出全链路证书，默认不输出",
 		},
 	}
