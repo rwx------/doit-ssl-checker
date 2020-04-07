@@ -56,10 +56,12 @@ func main() {
 		}
 
 		conn, err := tls.Dial("tcp", addr, &cnf)
-		if err != nil {
-			fmt.Printf("[error]: %v", err.Error())
-		}
 		defer conn.Close()
+
+		if err != nil {
+			fmt.Printf("[error]: %v\n", err.Error())
+			return nil
+		}
 		Dprint(conn, domain, verbose)
 		return nil
 	}
