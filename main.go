@@ -39,7 +39,7 @@ func main() {
 		},
 	}
 
-	app.Action = func(c *cli.Context) error {
+	app.Action = func(c *cli.Context) {
 		domain := c.String("domain")
 		ip := c.String("ip")
 		port := c.String("port")
@@ -56,21 +56,18 @@ func main() {
 		}
 
 		conn, err := tls.Dial("tcp", addr, &cnf)
-		defer conn.Close()
 
 		if err != nil {
-			fmt.Printf("[error]: %v\n", err.Error())
-			return nil
+			fmt.Printf("[error]: %v\n", err)
+			return
 		}
 		Dprint(conn, domain, verbose)
-		return nil
 	}
 	app.Run(os.Args)
 }
 
 // Dprint doit检测工具的输出
 func Dprint(conn *tls.Conn, domain string, verbose bool) {
-	fmt.Printf("\n检测的域名: %v, 远程主机的ip: %v\n\n", domain, conn.RemoteAddr())
 	status := conn.ConnectionState()
 
 	if !verbose {
@@ -101,4 +98,5 @@ func Dprint(conn *tls.Conn, domain string, verbose bool) {
 		}
 	}
 
+	fmt.Printf("\n检测的域名: %v, 远程主机的ip: %v\n\n", domain, conn.RemoteAddr())
 }
